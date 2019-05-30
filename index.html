@@ -1,43 +1,15 @@
 <!DOCTYPE html>
-
 <html>
   <head>
-    <!-- Name for the Tab -->
-    <title>Haptica</title>
-
+    <title>Compass</title>
     <!-- References the CSS -->
     <link rel="stylesheet" href="index.css">
   </head>
-
-  <body id="container" onload="compass()">
-    <div id="title">
-      <!-- Uses the title image made from project one to make a  nice heading for the website -->
-      <img src="images/Haptica.png" alt="Haptica Logo" id="logo">
-      <!-- FOR TESTING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
-      <h1 style="text-align: center;">Compass 12</h1>
-      <!-- FOR TESTING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
-    </div>
-
-    <div id="compassImages">
-      <div id="base">
-        <img src="images/compass.png" alt="Compass Base" id="base">
-      </div>
-      <div id="nArrow">
-        <img src="images/nArrow.png" alt="North Arrow" id="north">
-      </div>
-    </div>
-    <br>
-
-    <div id="coordinates">
-        Degrees from North:<br/>
-        <span id="alpha">???</span>
-        <p>
-      </p>
-      <!-- FOR TESTING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
-    </div>
+  <body>
+    <br><br>
+    <p id="heading" style="text-align:center"></p>
 
     <!-- Links to the CSS, Javascript, and the Google Map API -->
     <script src="index.js"></script>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB9NS6UtaCtvTytSXmlS5ArEEr_XSaZ9B8&libraries=geometry"></script>
   </body>
 </html>

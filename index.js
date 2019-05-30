@@ -1,45 +1,43 @@
-// Version 12
-
-// Compass Code and alpha data etc inspired and adapted from HTML5 for the Mobile Web: Device Orientation Events
-// https://mobiforge.com/design-development/html5-mobile-web-device-orientation-events
-
-// Code also an combination of many helpful tutorials online but no major code taken just used to fix small issues
-
-function compass() {
-  // Check for support for DeviceOrientation event and executes if the is support
-  if(window.DeviceOrientationEvent) {
-    // I think this is a continously executing function that is the core of the system. Based off of the Link at top and don't fully understand it
-    window.addEventListener('deviceorientation', function(event) {
-      var alpha; // Variable holder for alpha as it has different applications over different devises
-      var nArrow = document.getElementById('north');
-
-      // Check for iOS properties
-      if(event.webkitCompassHeading) {
-        alpha = event.webkitCompassHeading; // Calculates where North is for iPhone.
-        //Rotation is reversed for iOS
-        nArrow.style.WebkitTransform = 'rotate(-' + alpha + 'deg)';
-      }
-
-      // Non iOS.
-      else {
-        alpha = event.alpha; // Sets alpha for Andriod
-        webkitAlpha = alpha; // To be used for the chrome
-
-        //Assume Android stock (this is crude, will reccomend change to chrome) and apply offset
-        if(!window.chrome) {
-          webkitAlpha = alpha - 270;
-        }
-      }
-
-      //Displaying of the data as a compass
-      nArrow.style.Transform = 'rotate(' + alpha + 'deg)';
-      nArrow.style.WebkitTransform = 'rotate('+ webkitAlpha + 'deg)';
-      nArrow.style.MozTransform = 'rotate(-' + alpha + 'deg)'; 
-
-      // TESTING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-      document.getElementById('alpha').innerHTML = alpha;
-      // TESTING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-    }, false); // This could also be what loops the code. I am not fully sure
+// Get event data
+function deviceOrientationListener(event) {
+  var alpha    = event.alpha; //z axis rotation [0,360)
+  var beta     = event.beta; //x axis rotation [-180, 180]
+  var gamma    = event.gamma; //y axis rotation [-90, 90]
+  
+  //Check if absolute values have been sent
+  if (typeof event.webkitCompassHeading !== "undefined") {
+    alpha = event.webkitCompassHeading; //iOS non-standard
+    var heading = alpha
+    document.getElementById("heading").innerHTML = heading.toFixed([0]);
   }
+  else {
+    alert("Your device is reporting relative alpha values, so this compass won't point north :(");
+    var heading = 360 - alpha; //heading [0, 360)
+    document.getElementById("heading").innerHTML = heading.toFixed([0]);
+  }
+  
+  // Change backgroud colour based on heading
+  // Green for North and South, black otherwise
+  if (heading > 359 || heading < 1) { //Allow +- 1 degree
+    document.body.style.backgroundColor = "green";
+    document.getElementById("heading").innerHTML = "N"; // North
+  }
+  else if (heading > 179 && heading < 181){ //Allow +- 1 degree
+    document.body.style.backgroundColor = "green";
+    document.getElementById("heading").innerHTML = "S"; // South
+  } 
+  else { // Otherwise, use near black
+    document.body.style.backgroundColor = "#161616";
+  }
+}
+
+// Check if device can provide absolute orientation data
+if (window.DeviceOrientationAbsoluteEvent) {
+  window.addEventListener("DeviceOrientationAbsoluteEvent", deviceOrientationListener);
+} // If not, check if the device sends any orientation data
+else if(window.DeviceOrientationEvent){
+  window.addEventListener("deviceorientation", deviceOrientationListener);
+} // Send an alert if the device isn't compatible
+else {
+  alert("Sorry, try again on a compatible mobile device!");
 }
