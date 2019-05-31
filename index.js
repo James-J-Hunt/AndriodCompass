@@ -1,43 +1,24 @@
-// Get event data
-function deviceOrientationListener(event) {
-  var alpha    = event.alpha; //z axis rotation [0,360)
-  var beta     = event.beta; //x axis rotation [-180, 180]
-  var gamma    = event.gamma; //y axis rotation [-90, 90]
-  
-  //Check if absolute values have been sent
-  if (typeof event.webkitCompassHeading !== "undefined") {
-    alpha = event.webkitCompassHeading; //iOS non-standard
-    var heading = alpha
-    document.getElementById("heading").innerHTML = heading.toFixed([0]);
+function compass() {
+ 
+  // Check for support for DeviceOrientationAbsolute event and executes if the is support
+  if(window.DeviceOrientationEvent) {
+    window.addEventListener('deviceorientationabsolute', function(event) { // absolute
+      var alpha; // Variable holder for alpha as it has different applications over different devises
+
+      alpha = event.alpha; // Sets alpha for Andriod
+      webkitAlpha = alpha; // To be used for the chrome
+
+      document.getElementById('alpha').innerHTML = alpha;
+
+    }, false); // This could also be what loops the code. I am not fully sure
+  }
+  if ('ondeviceorientationabsolute' in window) {
+    document.getElementById('check').innerHTML = 'absolute';
+  } 
+  else if ('ondeviceorientation' in  window) {
+    document.getElementById('check').innerHTML = 'not absolute';
   }
   else {
-    alert("Your device is reporting relative alpha values, so this compass won't point north :(");
-    var heading = 360 - alpha; //heading [0, 360)
-    document.getElementById("heading").innerHTML = heading.toFixed([0]);
+    document.getElementById('check').innerHTML = 'no work';
   }
-  
-  // Change backgroud colour based on heading
-  // Green for North and South, black otherwise
-  if (heading > 359 || heading < 1) { //Allow +- 1 degree
-    document.body.style.backgroundColor = "green";
-    document.getElementById("heading").innerHTML = "N"; // North
-  }
-  else if (heading > 179 && heading < 181){ //Allow +- 1 degree
-    document.body.style.backgroundColor = "green";
-    document.getElementById("heading").innerHTML = "S"; // South
-  } 
-  else { // Otherwise, use near black
-    document.body.style.backgroundColor = "#161616";
-  }
-}
-
-// Check if device can provide absolute orientation data
-if (window.DeviceOrientationAbsoluteEvent) {
-  window.addEventListener("DeviceOrientationAbsoluteEvent", deviceOrientationListener);
-} // If not, check if the device sends any orientation data
-else if(window.DeviceOrientationEvent){
-  window.addEventListener("deviceorientation", deviceOrientationListener);
-} // Send an alert if the device isn't compatible
-else {
-  alert("Sorry, try again on a compatible mobile device!");
 }

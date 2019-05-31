@@ -1,13 +1,22 @@
+<!-- Version 21 -->
+
 <!DOCTYPE html>
+
 <html>
   <head>
-    <title>Compass</title>
     <!-- References the CSS -->
     <link rel="stylesheet" href="index.css">
   </head>
-  <body>
-    <br><br>
-    <p id="heading" style="text-align:center"></p>
+
+  <body id="container" onload="compass()">
+    <div id="coordinates">
+      Degrees from North:<br/>
+      <span id="alpha">???</span>
+      <p>
+      Check:<br/>
+      <span id="check">???</span>
+      <p>
+    </div>
 
     <!-- Links to the CSS, Javascript, and the Google Map API -->
     <script src="index.js"></script>
