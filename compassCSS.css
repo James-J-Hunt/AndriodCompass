@@ -1,0 +1,22 @@
+html {
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+body {
+	height: 100%;
+	margin: 0;
+	margin-top: 10%;
+	padding: 0;
+}
+/* Mostly CSS for Testing Text */
+#coordinates {
+	margin-top: 50%;
+	text-align: center;
+	text-transform: uppercase;
+	font-size: 2em;
+    font-weight: bold;
+}
+#alpha, #check{
+	font-weight: normal;
+}
